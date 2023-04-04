@@ -359,7 +359,8 @@ int main()
                     qx.pop();
                     qy.pop();
                     size--;
-                    if (size == 0) {
+                    if (size == 0)
+                    {
                         dist++;
                         size = qx.size();
                     }
