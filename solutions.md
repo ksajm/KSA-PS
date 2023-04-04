@@ -4,6 +4,7 @@
 # 유감
 
 ## 가장 보편적인 방법
+
 ```py
 message = input()
 if message == '이슈가 있는데?' or message == '이슈가 너무 큰데?':
@@ -13,7 +14,9 @@ else:
 ```
 
 ## in 연산자와 tuple 사용
+
 * [in 연산자](https://velog.io/@binsu/Python-%EB%AC%B8%EB%B2%95-in-not-in-%EC%97%B0%EC%82%B0%EC%9E%90)
+
 ```py
 message = input()
 if message in ('이슈가 있는데?', '이슈가 너무 큰데?'):
@@ -29,6 +32,7 @@ else:
 # 이슈가 있는데?
 
 ## for에 string 넣기 <- 문제가 의도한 풀이
+
 ```py
 def numberOfIssue(string):
     count = 0
@@ -48,7 +52,9 @@ else:
 ```
 
 ## 파이썬 str 내장함수(메소드) 쓰기
+
 * [count 메소드](https://www.entity.co.kr/entry/43-%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EB%AC%B8%EC%9E%90%EC%97%B4-count-%EB%A9%94%EC%86%8C%EB%93%9C)
+
 ```py
 message = input()
 ## 메세지에 '이슈'라는 단어는 적어도 하나 반드시 존재함
@@ -95,8 +101,10 @@ print(hours, minutes, sep = ':')
 ```
 
 ## split과 format 사용
+
 * [split](https://www.entity.co.kr/entry/47-Python-%EB%AC%B8%EC%9E%90%EC%97%B4-split-%EB%AA%A9%EB%A1%9D-%EB%AC%B8%EC%9E%90%EB%B3%84-%EA%B5%AC%EB%B6%84-%EA%B8%B0%ED%98%B8)
 * [format](https://ddolcat.tistory.com/692)
+
 ```py
 n = int(input())
 sumOfM = 0
@@ -116,6 +124,7 @@ print('{:02d}:{:02d}'.format(hours, minutes))
 # 독감
 
 ## 의도한 풀이
+
 ```py
 n, m = input().split()
 n = int(n)
@@ -125,19 +134,43 @@ infectedRooms = list(map(int, input().split()))
 firstRoom = 422
 lastRoom = 422 + n - 1
 
-diffMax = infectedRooms[0] - (firstRoom - 1)
+maxDiff = infectedRooms[0] - firstRoom
 
 for i in range(1, m):
     diff = (infectedRooms[i] - infectedRooms[i - 1]) // 2
-    if diffMax < diff:
-        diffMax = diff
+    if maxDiff < diff:
+        maxDiff = diff
 
-diff = (lastRoom + 1) - infectedRooms[-1]
-if diffMax < diff:
-    diffMax = diff
+diff = lastRoom - infectedRooms[-1]
+if maxDiff < diff:
+    maxDiff = diff
 
-print(diffMax + 7)
+print(maxDiff + 8)
 ```
+
+```cpp
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int n, m, maxval = -1, past, room;
+    cin >> n >> m;
+    for(int i = 0; i < m; i++) {
+        cin >> room;
+        if (i == 0) {
+            maxval = max(maxval, room - 423);
+        }
+        else {
+            maxval = max(maxval, (room - past) / 2);
+        }
+        past = room;
+    }
+    maxval = max(maxval, 423 + n - 1 - room);
+    cout << maxval + 8;
+}
+```
+
 * 두 방이 독감에 감염되었을 때, 두 방의 중앙에 위치한 방이 가장 마지막에 독감에 걸린다. 
 * 양 끝에 위치한 방이 마지막에 독감에 걸리는지도 확인해야한다.
 ---
@@ -146,13 +179,19 @@ print(diffMax + 7)
 
 ## BFS
 * [BFS](https://namu.wiki/w/%EB%84%88%EB%B9%84%20%EC%9A%B0%EC%84%A0%20%ED%83%90%EC%83%89)
+
 ```py
 ```
+
+```cpp
+```
+
 ---
 
 # 마인크래프트 2
 
 ## BFS 
+
 ```py
 ```
 ---
