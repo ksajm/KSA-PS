@@ -13,6 +13,7 @@ else:
 ```
 
 ## in 연산자와 tuple 사용
+* [in 연산자](https://velog.io/@binsu/Python-%EB%AC%B8%EB%B2%95-in-not-in-%EC%97%B0%EC%82%B0%EC%9E%90)
 ```py
 message = input()
 if message in ('이슈가 있는데?', '이슈가 너무 큰데?'):
@@ -44,6 +45,7 @@ else:
 ```
 
 ## 파이썬 str 내장함수(메소드) 쓰기
+* [count 메소드](https://www.entity.co.kr/entry/43-%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EB%AC%B8%EC%9E%90%EC%97%B4-count-%EB%A9%94%EC%86%8C%EB%93%9C)
 ```py
 message = input()
 ## 메세지에 '이슈'라는 단어는 적어도 하나 반드시 존재함
@@ -90,6 +92,8 @@ print(hours, minutes, sep = ':')
 ```
 
 ## split과 format 사용
+* [split](https://www.entity.co.kr/entry/47-Python-%EB%AC%B8%EC%9E%90%EC%97%B4-split-%EB%AA%A9%EB%A1%9D-%EB%AC%B8%EC%9E%90%EB%B3%84-%EA%B5%AC%EB%B6%84-%EA%B8%B0%ED%98%B8)
+* [format](https://ddolcat.tistory.com/692)
 ```py
 n = int(input())
 sumOfM = 0
@@ -138,7 +142,7 @@ print(diffMax + 7)
 # 마인크래프트 1
 
 ## BFS
-* [BFS란?](https://namu.wiki/w/%EB%84%88%EB%B9%84%20%EC%9A%B0%EC%84%A0%20%ED%83%90%EC%83%89)
+* [BFS](https://namu.wiki/w/%EB%84%88%EB%B9%84%20%EC%9A%B0%EC%84%A0%20%ED%83%90%EC%83%89)
 ```py
 ```
 ---
