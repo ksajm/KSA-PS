@@ -49,6 +49,9 @@ del rooms[ max(r1, r2, r3) ]
 for ans in rooms:
     print(ans)
 ```
+
+* 가운데 위치한 방에서 만나는 것이 최소 에너지를 사용한다.
+
 ---
 
 # 이슈가 있는데?
