@@ -1,15 +1,10 @@
-r1, r2, r3 = input().split()
-r1 = int(r1)
-r2 = int(r2)
-r3 = int(r3)
+r1, r2, r3 = map(int, input().split())
 
 rooms = {
-    r1: '김준이',
-    r2: '김창하',
-    r3: '김래환'
+    '김준이': r1,
+    '김창하': r2,
+    '김래환': r3
 }
-del rooms[ min(r1, r2, r3) ]
-del rooms[ max(r1, r2, r3) ]
 
-for ans in rooms:
-    print(ans)
+rooms = sorted(rooms.items(), key = lambda x:x[1])
+print(rooms[1][0])

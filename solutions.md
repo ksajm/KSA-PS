@@ -28,26 +28,44 @@ else:
 
 # 누구 방에서 만날까?
 
-## dict 사용
-
-* [dict](https://wikidocs.net/16043)
+## 가운데 수 조건문으로 찾기
 
 ```py
-r1, r2, r3 = input().split()
-r1 = int(r1)
-r2 = int(r2)
-r3 = int(r3)
+junee, changha, raehwan = input().split()
+junee = int(junee)
+changha = int(changha)
+raehwan = int(raehwan)
+
+minRoom = min(junee, changha, raehwan)
+maxRoom = max(junee, changha, raehwan)
+
+if (junee == minRoom and changha == maxRoom) \
+or (changha == minRoom and junee == maxRoom):
+    print('김래환')
+elif (raehwan == minRoom and changha == maxRoom) \
+or (changha == minRoom and raehwan == maxRoom):
+    print('김준이')
+else:
+    print('김창하')
+```
+
+## dict와 sorted 사용
+
+* [dict](https://wikidocs.net/16043)
+* [dict sort by value](https://www.freecodecamp.org/news/sort-dictionary-by-value-in-python/)
+* [lambda](http://www.gisdeveloper.co.kr/?p=9031)
+
+```py
+r1, r2, r3 = map(int, input().split())
 
 rooms = {
-    r1: '김준이',
-    r2: '김창하',
-    r3: '김래환'
+    '김준이': r1,
+    '김창하': r2,
+    '김래환': r3
 }
-del rooms[ min(r1, r2, r3) ]
-del rooms[ max(r1, r2, r3) ]
 
-for ans in rooms:
-    print(ans)
+rooms = sorted(rooms.items(), key = lambda x:x[1])
+print(rooms[1][0])
 ```
 
 * 가운데 위치한 방에서 만나는 것이 최소 에너지를 사용한다.
