@@ -268,7 +268,7 @@ def isInRange(x, y):
 
 def checkNextBlock(arg):
     global hasAnswer
-    x, y, dis = arg
+    time, x, y = arg
 
     for move in direction:
         nextX = x + move[0]
@@ -278,18 +278,18 @@ def checkNextBlock(arg):
 
         if location[nextY][nextX] == -1:
             hasAnswer = True
-            print(dis + 1)
+            print(time + 1)
             return
         elif location[nextY][nextX] != -2:
+            queue.append((time + 1, nextX, nextY))
             location[nextY][nextX] = -2
-            queue.append((nextX, nextY, dis + 1))
 
 def startBFS():
-    for i in range(h):
-        for j in range(w):
-            if location[i][j] == -1:
-                location[i][j] = -2
-                checkNextBlock((i, j, 0))
+    for y in range(h):
+        for x in range(w):
+            if location[y][x] == -1:
+                location[y][x] = -2
+                checkNextBlock((0, x, y))
                 return
 
 
@@ -378,14 +378,78 @@ int main()
 # 마인크래프트 2
 
 ## 설명
-이전 문제와 다르게, 각 칸끼리 이동할 때 드는 시간이 다르다. 각 칸을 정점으로 두고 인접한 칸끼리 가중치(거리)가 (캐는데 걸리는 시간 + 1)인 간선으로 연결하면, 그래프의 최단 경로 탐색 알고리즘을 적용하는 문제임을 알 수 있다. 따라서 다익스트라 알고리즘을 사용하면 ~~쉽게~~ 풀 수 있다.
+이전 문제와 다르게, 각 칸끼리 이동할 때 드는 시간이 다르다. 각 칸을 정점으로 두고 인접한 칸끼리 가중치(거리)가 (캐는데 걸리는 시간 + 1)인 간선으로 연결하면, 그래프의 최단 경로 탐색 알고리즘을 적용하는 문제임을 알 수 있다. 따라서 다익스트라 알고리즘을 사용하면 쉽게 풀 수 있다.
 
 ## Dijkstra (다익스트라)
 
 * [Dijkstra](https://velog.io/@717lumos/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EB%8B%A4%EC%9D%B5%EC%8A%A4%ED%8A%B8%EB%9D%BCDijkstra-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98)
+* [Priority Queue](https://www.daleseo.com/python-priority-queue/)
 
 ```py
+from queue import PriorityQueue
+
+w, h = map(int, input().split())
+location = []
+timeCost = [[float('inf') for i in range(w)] for i in range(h)]
+direction = ((1, 0), (-1, 0), (0, 1), (0, -1))
+queue = PriorityQueue()
+hasAnswer = False
+
+
+def getInput():
+    for i in range(h):
+        location.append(list(
+            map(int, input().split())
+        ))
+
+def isInRange(x, y):
+    return 0 <= x < w and 0 <= y < h
+
+def checkNextBlock(arg):
+    global hasAnswer
+    time, x, y = arg
+    
+    if time == 0:
+        pass
+    elif location[y][x] == -2:
+        #already checked
+        return
+    elif location[y][x] == -1:
+        hasAnswer = True
+        print(timeCost[y][x])
+        return
+    
+    location[y][x] = -2
+
+    for move in direction:
+        nextX = x + move[0]
+        nextY = y + move[1]
+        if not isInRange(nextX, nextY):
+            continue
+        nextTime = time + location[nextY][nextX] + 1
+        if location[nextY][nextX] == -1: nextTime += 1
+
+        # location[nextY][nextX] is never -2 in this situation (알고리즘에 의해 증명 가능)
+        if nextTime < timeCost[nextY][nextX]:
+            timeCost[nextY][nextX] = nextTime
+            queue.put((nextTime, nextX, nextY))
+
+def startDijkstra():
+    for y in range(h):
+        for x in range(w):
+            if location[y][x] == -1:
+                checkNextBlock((0, x, y))
+                return
+
+
+getInput()
+startDijkstra()
+
+while not hasAnswer:
+    checkNextBlock(queue.get())
 ```
+
+* -2일 경우 해당 칸에서 이동하는 경우는 이미 셌다는걸 표시한다.
 
 ---
 
