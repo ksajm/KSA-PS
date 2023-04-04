@@ -27,6 +27,7 @@ else:
 ---
 
 # 누구 방에서 만날까?
+가운데 위치한 방에서 만나는 것이 최소 에너지를 사용한다.
 
 ## 가운데 수 조건문으로 찾기
 
@@ -67,9 +68,6 @@ rooms = {
 rooms = sorted(rooms.items(), key = lambda x:x[1])
 print(rooms[1][0])
 ```
-
-* 가운데 위치한 방에서 만나는 것이 최소 에너지를 사용한다.
-
 ---
 
 # 이슈가 있는데?
@@ -109,6 +107,7 @@ else:
 ---
 
 # 아침 점호
+어떻게 할 일 이름과 걸리는 시간을 분리할지, 어떻게 시간차를 계산할지, 어떻게 자릿수를 채울지 생각해야한다.
 
 ## 의도한 풀이
 ```py
@@ -165,6 +164,8 @@ print('{:02d}:{:02d}'.format(hours, minutes))
 ---
 
 # 독감
+두 방이 독감에 감염되었을 때, 두 방의 중앙에 위치한 방이 가장 마지막에 독감에 걸린다. \
+또한, 양 끝에 위치한 방이 마지막에 독감에 걸리는 여부도 확인해야한다.
 
 ## 의도한 풀이
 
@@ -213,9 +214,6 @@ int main() {
     cout << maxval + 8;
 }
 ```
-
-* 두 방이 독감에 감염되었을 때, 두 방의 중앙에 위치한 방이 가장 마지막에 독감에 걸린다. 
-* 양 끝에 위치한 방이 마지막에 독감에 걸리는지도 확인해야한다.
 ---
 
 # 마인크래프트 1
@@ -224,10 +222,127 @@ int main() {
 * [BFS](https://namu.wiki/w/%EB%84%88%EB%B9%84%20%EC%9A%B0%EC%84%A0%20%ED%83%90%EC%83%89)
 
 ```py
+w, h = map(int, input().split())
+location = []
+direction = ((1, 0), (-1, 0), (0, 1), (0, -1))
+queue = []
+hasAnswer = False
+
+
+def getInput():
+    for i in range(h):
+        location.append(list(
+            map(int, input().split())
+        ))
+
+def isInRange(x, y):
+    return 0 <= x < w and 0 <= y < h
+
+def checkNextBlock(arg):
+    global hasAnswer
+    x, y, dis = arg
+
+    for move in direction:
+        nextX = x + move[0]
+        nextY = y + move[1]
+        if not isInRange(nextX, nextY):
+            continue
+
+        if location[nextY][nextX] == -1:
+            hasAnswer = True
+            print(dis + 1)
+            return
+        elif location[nextY][nextX] != -2:
+            location[nextY][nextX] = -2
+            queue.append((nextX, nextY, dis + 1))
+
+def startBFS():
+    for i in range(h):
+        for j in range(w):
+            if location[i][j] == -1:
+                location[i][j] = -2
+                checkNextBlock((i, j, 0))
+                return
+
+
+getInput()
+startBFS()
+
+while len(queue) >= 0 and not hasAnswer:
+    checkNextBlock(queue.pop(0))
 ```
 
+* queue에 x, y, 거리를 튜플로 담아 checkNextBlock의 인자로 넘겼다. 
+
 ```cpp
+#include <iostream>
+#include <algorithm>
+#include <queue>
+using namespace std;
+
+queue<int> qx, qy;
+int dirx[4] = { 0, 1, 0, -1 }, diry[4] = { 1, 0, -1, 0 };
+
+int main()
+{
+    cin.tie(0);
+    cout.tie(0);
+    ios::sync_with_stdio(false);
+    int f[64][64], visited[64][64] = { 0, };
+    int w, h;
+    cin >> w >> h;
+    for (int i = 0; i < h; i++)
+    {
+        for (int j = 0; j < w; j++)
+        {
+            cin >> f[i][j];
+        }
+    }
+
+    for (int i = 0; i < h; i++)
+    {
+        for (int j = 0; j < w; j++)
+        {
+            if (f[i][j] == -1)
+            {
+                int size = 1, dist = 0;
+                qx.push(j), qy.push(i);
+                while (!qx.empty())
+                {
+                    int herex = qx.front(), herey = qy.front();
+                    visited[herey][herex] = 1;
+                    for (int i = 0; i < 4; i++)
+                    {
+                        int therex = herex + dirx[i], therey = herey + diry[i];
+                        if (therex >= 0 && therex < w && therey >= 0 && therey < h)
+                        {
+                            if (visited[therey][therex] != 1 && f[therey][therex] == -1)
+                            {
+                                cout << dist + 1;
+                                return 0;
+                            }
+                            if (visited[therey][therex] != 1 && f[therey][therex] == 0)
+                            {
+                                qx.push(therex);
+                                qy.push(therey);
+                            }
+                        }
+                    }
+                    qx.pop();
+                    qy.pop();
+                    size--;
+                    if (size == 0) {
+                        dist++;
+                        size = qx.size();
+                    }
+                }
+            }
+        }
+    }
+}
 ```
+
+* x값과 y값을 담기 위해 qx, qy라는 튜플 2개를 사용하였다.
 
 ---
 
@@ -238,3 +353,5 @@ int main() {
 ```py
 ```
 ---
+
+python code by *Junee* and c++ code by *Raehwan*
