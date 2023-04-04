@@ -1,4 +1,5 @@
 * [문제 보기](./problems.md)
+
 ---
 
 # 유감
@@ -14,7 +15,6 @@ else:
 ```
 
 ## in 연산자와 tuple 사용
-
 * [in 연산자](https://velog.io/@binsu/Python-%EB%AC%B8%EB%B2%95-in-not-in-%EC%97%B0%EC%82%B0%EC%9E%90)
 
 ```py
@@ -24,6 +24,7 @@ if message in ('이슈가 있는데?', '이슈가 너무 큰데?'):
 else:
     print('무감')
 ```
+
 ---
 
 # 누구 방에서 만날까?
@@ -51,7 +52,6 @@ else:
 ```
 
 ## dict와 sorted 사용
-
 * [dict](https://wikidocs.net/16043)
 * [dict sort by value](https://www.freecodecamp.org/news/sort-dictionary-by-value-in-python/)
 * [lambda](http://www.gisdeveloper.co.kr/?p=9031)
@@ -68,6 +68,7 @@ rooms = {
 rooms = sorted(rooms.items(), key = lambda x:x[1])
 print(rooms[1][0])
 ```
+
 ---
 
 # 이슈가 있는데?
@@ -93,7 +94,6 @@ else:
 ```
 
 ## 파이썬 str 내장함수(메소드) 쓰기
-
 * [count 메소드](https://www.entity.co.kr/entry/43-%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EB%AC%B8%EC%9E%90%EC%97%B4-count-%EB%A9%94%EC%86%8C%EB%93%9C)
 
 ```py
@@ -104,12 +104,14 @@ if message.count('이슈') < 10:
 else:
     print('이슈가 너무 큰데?')
 ```
+
 ---
 
 # 아침 점호
 어떻게 할 일 이름과 걸리는 시간을 분리할지, 어떻게 시간차를 계산할지, 어떻게 자릿수를 채울지 생각해야한다.
 
 ## 의도한 풀이
+
 ```py
 def fillTwoDigits(num):
     string = str(num)
@@ -143,7 +145,6 @@ print(hours, minutes, sep = ':')
 ```
 
 ## split과 format 사용
-
 * [split](https://www.entity.co.kr/entry/47-Python-%EB%AC%B8%EC%9E%90%EC%97%B4-split-%EB%AA%A9%EB%A1%9D-%EB%AC%B8%EC%9E%90%EB%B3%84-%EA%B5%AC%EB%B6%84-%EA%B8%B0%ED%98%B8)
 * [format](https://ddolcat.tistory.com/692)
 
@@ -159,8 +160,10 @@ hours = (8 * 60 - sumOfM) // 60
 minutes = (70 - sumOfM % 60) % 60
 print('{:02d}:{:02d}'.format(hours, minutes))
 ```
+
 * split을 통해 띄어쓰기를 기준으로 구분하여 m을 구할 수 있다.
 * format을 통해 시간과 분을 두 자리로 맞출 수 있다.
+
 ---
 
 # 독감
@@ -197,15 +200,19 @@ print(maxDiff + 8)
 #include <algorithm>
 using namespace std;
 
-int main() {
+int main()
+{
     int n, m, maxval = -1, past, room;
     cin >> n >> m;
-    for(int i = 0; i < m; i++) {
+    for(int i = 0; i < m; i++)
+    {
         cin >> room;
-        if (i == 0) {
+        if (i == 0)
+        {
             maxval = max(maxval, room - 423);
         }
-        else {
+        else
+        {
             maxval = max(maxval, (room - past) / 2);
         }
         past = room;
@@ -214,9 +221,13 @@ int main() {
     cout << maxval + 8;
 }
 ```
+
 ---
 
 # 마인크래프트 1
+
+## 설명
+그래프에서 두 정점 사이 거리를 구하는 알고리즘을 생각해야한다.
 
 ## BFS
 * [BFS](https://namu.wiki/w/%EB%84%88%EB%B9%84%20%EC%9A%B0%EC%84%A0%20%ED%83%90%EC%83%89)
@@ -352,6 +363,10 @@ int main()
 
 ```py
 ```
+
 ---
 
+---
+
+# comments
 python code by *Junee* and c++ code by *Raehwan*
