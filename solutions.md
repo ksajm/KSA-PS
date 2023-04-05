@@ -17,12 +17,12 @@ else:
     print('무감')
 ```
 
-## in 연산자와 tuple 사용
+## in 연산자와 list 사용
 * [in 연산자](https://velog.io/@binsu/Python-%EB%AC%B8%EB%B2%95-in-not-in-%EC%97%B0%EC%82%B0%EC%9E%90)
 
 ```py
 message = input()
-if message in ('이슈가 있는데?', '이슈가 너무 큰데?'):
+if message in ['이슈가 있는데?', '이슈가 너무 큰데?']:
     print('유감')
 else:
     print('무감')
@@ -382,8 +382,9 @@ int main()
 
 ## Dijkstra (다익스트라)
 
-* [Dijkstra](https://velog.io/@717lumos/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EB%8B%A4%EC%9D%B5%EC%8A%A4%ED%8A%B8%EB%9D%BCDijkstra-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98)
+* [Heap](https://gmlwjd9405.github.io/2018/05/10/data-structure-heap.html)
 * [Priority Queue](https://www.daleseo.com/python-priority-queue/)
+* [Dijkstra](https://velog.io/@717lumos/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EB%8B%A4%EC%9D%B5%EC%8A%A4%ED%8A%B8%EB%9D%BCDijkstra-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98)
 
 ```py
 from queue import PriorityQueue
