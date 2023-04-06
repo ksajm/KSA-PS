@@ -30,6 +30,45 @@ else:
 
 ---
 
+# 이슈가 있는데?
+
+## 설명
+하나의 긴 문자열에서 특정 문자열을 어떻게 찾는지, 그리고 그 개수를 어떻게 찾을지 생각해야 한다.
+
+## for에 string 넣기 <- 문제가 의도한 풀이
+
+```py
+def numberOfIssue(string):
+    count = 0
+    beforeChar = ''
+    for char in string:
+        if beforeChar == '이' and char == '슈':
+            count += 1
+        beforeChar = char
+    return count
+
+message = input()
+## 메세지에 '이슈'라는 단어는 적어도 하나 반드시 존재함
+if numberOfIssue(message) < 10:
+    print('이슈가 있는데?')
+else:
+    print('이슈가 너무 큰데?')
+```
+
+## 파이썬 str 내장함수(메소드) 쓰기
+* [count 메소드](https://www.entity.co.kr/entry/43-%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EB%AC%B8%EC%9E%90%EC%97%B4-count-%EB%A9%94%EC%86%8C%EB%93%9C)
+
+```py
+message = input()
+## 메세지에 '이슈'라는 단어는 적어도 하나 반드시 존재함
+if message.count('이슈') < 10:
+    print('이슈가 있는데?')
+else:
+    print('이슈가 너무 큰데?')
+```
+
+---
+
 # 누구 방에서 만날까?
 
 ## 설명
@@ -72,45 +111,6 @@ rooms = {
 
 rooms = sorted(rooms.items(), key = lambda x:x[1])
 print(rooms[1][0])
-```
-
----
-
-# 이슈가 있는데?
-
-## 설명
-하나의 긴 문자열에서 특정 문자열을 어떻게 찾는지, 그리고 그 개수를 어떻게 찾을지 생각해야 한다.
-
-## for에 string 넣기 <- 문제가 의도한 풀이
-
-```py
-def numberOfIssue(string):
-    count = 0
-    beforeChar = ''
-    for char in string:
-        if beforeChar == '이' and char == '슈':
-            count += 1
-        beforeChar = char
-    return count
-
-message = input()
-## 메세지에 '이슈'라는 단어는 적어도 하나 반드시 존재함
-if numberOfIssue(message) < 10:
-    print('이슈가 있는데?')
-else:
-    print('이슈가 너무 큰데?')
-```
-
-## 파이썬 str 내장함수(메소드) 쓰기
-* [count 메소드](https://www.entity.co.kr/entry/43-%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EB%AC%B8%EC%9E%90%EC%97%B4-count-%EB%A9%94%EC%86%8C%EB%93%9C)
-
-```py
-message = input()
-## 메세지에 '이슈'라는 단어는 적어도 하나 반드시 존재함
-if message.count('이슈') < 10:
-    print('이슈가 있는데?')
-else:
-    print('이슈가 너무 큰데?')
 ```
 
 ---
