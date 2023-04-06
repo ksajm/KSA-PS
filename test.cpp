@@ -2,64 +2,104 @@
 #include <algorithm>
 #include <queue>
 using namespace std;
+/*
+    code by Raehwan
+    & refactored by Junee
+*/
 
-queue<int> qx, qy;
-int dirx[4] = { 0, 1, 0, -1 }, diry[4] = { 1, 0, -1, 0 };
+int w, h, location[64][64], timeArray[64][64], dirx[4] = { 1, 0, -1, 0 }, diry[4] = { 0, 1, 0, -1 };
+priority_queue<pair<int, pair<int, int>>> pq;
 
-int main()
-{
-    cin.tie(0);
-    cout.tie(0);
-    ios::sync_with_stdio(false);
-    int f[64][64], visited[64][64] = { 0, };
-    int w, h;
+void getInput() {
     cin >> w >> h;
     for (int i = 0; i < h; i++)
     {
         for (int j = 0; j < w; j++)
         {
-            cin >> f[i][j];
+            cin >> location[i][j];
         }
     }
+}
 
+void initTime() {
     for (int i = 0; i < h; i++)
     {
         for (int j = 0; j < w; j++)
         {
-            if (f[i][j] == -1)
+            timeArray[i][j] = 9999999;
+        }
+    }
+}
+
+void dijkstra() {
+    while (!pq.empty())
+    {
+        int curTime = -pq.top().first, hereX = pq.top().second.first, hereY = pq.top().second.second;
+        for (int k = 0; k < 4; k++)
+        {
+            int thereX = hereX + dirx[k], thereY = hereY + diry[k];
+            bool isInRange = (thereX >= 0 && thereX < w && thereY >= 0 && thereY < h);
+
+            if (!isInRange || curTime > timeArray[thereY][thereX])
             {
-                int size = 1, dist = 0;
-                qx.push(j), qy.push(i);
-                while (!qx.empty())
-                {
-                    int herex = qx.front(), herey = qy.front();
-                    visited[herey][herex] = 1;
-                    for (int i = 0; i < 4; i++)
-                    {
-                        int therex = herex + dirx[i], therey = herey + diry[i];
-                        if (therex >= 0 && therex < w && therey >= 0 && therey < h)
-                        {
-                            if (visited[therey][therex] != 1 && f[therey][therex] == -1)
-                            {
-                                cout << dist + 1;
-                                return 0;
-                            }
-                            if (visited[therey][therex] != 1 && f[therey][therex] == 0)
-                            {
-                                qx.push(therex);
-                                qy.push(therey);
-                            }
-                        }
-                    }
-                    qx.pop();
-                    qy.pop();
-                    size--;
-                    if (size == 0) {
-                        dist++;
-                        size = qx.size();
-                    }
-                }
+                continue;
+            }
+
+            int newTime;
+            if (location[thereY][thereX] != -1)
+            {
+                newTime = curTime + location[thereY][thereX] + 1;
+            }
+            else
+            {
+                newTime = curTime + 1;
+            }
+
+            if(newTime < timeArray[thereY][thereX])
+            {
+                timeArray[thereY][thereX] = newTime;
+                pq.push( make_pair(-newTime, make_pair(thereX, thereY)) );
+            }
+        }
+        pq.pop();
+    }
+}
+
+int getAnswer() {
+    for(int i = 0; i < h; i++)
+    {
+        for(int j = 0; j < w; j++)
+        {
+            if(location[i][j] == -1 && timeArray[i][j] != 0)
+            {
+                return timeArray[i][j];
             }
         }
     }
+}
+
+int main()
+{
+    getInput();
+    initTime();
+    bool solved = false;
+    for(int i=0;i<h;i++)
+    {
+        for(int j=0;j<w;j++)
+        {
+            if(location[i][j]==-1)
+            {
+                timeArray[i][j]=0;
+                pq.push(make_pair(0,make_pair(j,i)));
+                dijkstra();
+                solved = true;
+                break;
+            }
+        }
+        if (solved)
+        {
+            break;
+        }
+    }
+    cout << getAnswer();
 }

@@ -21,17 +21,10 @@ def checkNextBlock(arg):
     global hasAnswer
     time, x, y = arg
     
-    if time == 0:
-        pass
-    elif location[y][x] == -2:
-        #already checked
-        return
-    elif location[y][x] == -1:
+    if location[y][x] == -1 and timeCost[y][x] != 0:
         hasAnswer = True
         print(timeCost[y][x])
         return
-    
-    location[y][x] = -2
 
     for move in direction:
         nextX = x + move[0]
@@ -41,7 +34,7 @@ def checkNextBlock(arg):
         nextTime = time + location[nextY][nextX] + 1
         if location[nextY][nextX] == -1: nextTime += 1
 
-        # location[nextY][nextX] is never -2 in this situation (알고리즘에 의해 증명 가능)
+        # nextTime is the minimum time to reach location[nextY][nextX] is in this situation (알고리즘에 의해 증명 가능)
         if nextTime < timeCost[nextY][nextX]:
             timeCost[nextY][nextX] = nextTime
             queue.put((nextTime, nextX, nextY))
@@ -50,9 +43,9 @@ def startDijkstra():
     for y in range(h):
         for x in range(w):
             if location[y][x] == -1:
+                timeCost[y][x] = 0
                 checkNextBlock((0, x, y))
                 return
-
 
 getInput()
 startDijkstra()
