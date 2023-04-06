@@ -316,7 +316,7 @@ int main()
     cin.tie(0);
     cout.tie(0);
     ios::sync_with_stdio(false);
-    int f[64][64], visited[64][64] = { 0, };
+    int f[1000][1000], visited[1000][1000] = { 0, };
     int w, h;
     cin >> w >> h;
     for (int i = 0; i < h; i++)
@@ -454,7 +454,7 @@ using namespace std;
     & refactored by Junee
 */
 
-int w, h, location[64][64], timeArray[64][64], dirx[4] = { 1, 0, -1, 0 }, diry[4] = { 0, 1, 0, -1 };
+int w, h, location[1000][1000], timeArray[1000][1000], dirx[4] = { 1, 0, -1, 0 }, diry[4] = { 0, 1, 0, -1 };
 priority_queue<pair<int, pair<int, int>>> pq;
 
 void getInput() {
