@@ -443,7 +443,6 @@ while not hasAnswer:
     checkNextBlock(queue.get())
 ```
 
-* -2일 경우 해당 칸에서 이동하는 경우는 이미 셌다는걸 표시한다.
 
 ```cpp
 #include <iostream>
