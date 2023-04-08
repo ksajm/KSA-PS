@@ -4,77 +4,104 @@
 #include <vector>
 #include <queue>
 using namespace std;
+/*
+    code by Raehwan
+    & refactored by Junee
+*/
 
+int w, h, location[64][64], timeArray[64][64], dirx[4] = { 1, 0, -1, 0 }, diry[4] = { 0, 1, 0, -1 };
+priority_queue<pair<int, pair<int, int>>> pq;
+
+void getInput() {
+    cin >> w >> h;
+    for (int i = 0; i < h; i++)
+    {
+        for (int j=0;j<w;j++)
+        {
+            cin >> location[i][j];
+        }
+    }
+}
+
+void initTime() {
+    for (int i = 0; i < h; i++)
+    {
+        for (int j=0;j<w;j++)
+        {
+            timeArray[i][j] = 9999999;
+        }
+    }
+}
+
+void dijkstra() {
+    while (!pq.empty())
+    {
+        int curTime = -pq.top().first, hereX = pq.top().second.first, hereY = pq.top().second.second;
+        for (int k = 0; k < 4; k++)
+        {
+            int thereX = hereX + dirx[k], thereY = hereY + diry[k];
+            bool isInRange = (thereX >= 0 && thereX < w && thereY >= 0 && thereY < h);
+
+            if (!isInRange || curTime > timeArray[thereY][thereX])
+            {
+                continue;
+            }
+
+            int newTime;
+            if (location[thereY][thereX] != -1)
+            {
+                newTime = curTime + location[thereY][thereX] + 1;
+            }
+            else
+            {
+                newTime = curTime + 1;
+            }
+
+            if(newTime < timeArray[thereY][thereX])
+            {
+                timeArray[thereY][thereX] = newTime;
+                pq.push( make_pair(-newTime, make_pair(thereX, thereY)) );
+            }
+        }
+        pq.pop();
+    }
+}
+
+int getAnswer() {
+    for(int i = 0; i < h; i++)
+    {
+        for(int j = 0; j < w; j++)
+        {
+            if(location[i][j] == -1 && timeArray[i][j] != 0)
+            {
+                return timeArray[i][j];
+            }
+        }
+    }
+}
 
 int main()
 {
-    cin.tie(0);
-    cout.tie(0);
-    ios::sync_with_stdio(false);
-    int w, h, f[64][64], time[64][64], dirx[4]={1,0,-1,0}, diry[4]={0,1,0,-1};
-    priority_queue<pair<int, pair<int, int>>> pq;
-    cin>>w>>h;
-    for (int i=0;i<h;i++)
+    getInput();
+    initTime();
+    bool solved = false;
+    for(int i=0;i<h;i++)
     {
-        for (int j=0;j<w;j++)
+        for(int j=0;j<w;j++)
         {
-            cin>>f[i][j];
-        }
-    }
-    for (int i=0;i<h;i++)
-    {
-        for (int j=0;j<w;j++)
-        {
-            time[i][j]=9999999;
-        }
-    }
-    for (int i=0;i<h;i++)
-    {
-        for (int j=0;j<w;j++)
-        {
-            if (f[i][j]==-1)
+            if(location[i][j]==-1)
             {
-                time[i][j]=0;
+                timeArray[i][j]=0;
                 pq.push(make_pair(0,make_pair(j,i)));
-                while (!pq.empty())
-                {
-                    int curtime=-pq.top().first, herex=pq.top().second.first, herey=pq.top().second.second;
-                    for (int k=0;k<4;k++)
-                    {
-                        int therex=herex+dirx[k], therey=herey+diry[k];
-                        if (therex<0||therex>=w||therey<0||therey>=h||curtime>time[therey][therex])
-                        {
-                            continue;
-                        }
-                        int newtime;
-                        if (f[therey][therex]!=-1)
-                        {
-                            newtime=curtime+f[therey][therex]+1;
-                        }
-                        else
-                        {
-                            newtime=curtime+1;
-                        }
-                        if (newtime<time[therey][therex])
-                        {
-                            time[therey][therex]=newtime;
-                            pq.push(make_pair(-newtime, make_pair(therex, therey)));
-                        }
-                    }
-                    pq.pop();
-                }
+                dijkstra();
+                solved = true;
                 break;
             }
         }
-    }
-    for (int i=0;i<h;i++)
-    {
-        for (int j=0;j<w;j++)
+        if (solved)
         {
-            if (f[i][j]==-1&&time[i][j]!=0)
-            {
-                cout<<time[i][j];
-            }
+            break;
         }
     }
+    cout << getAnswer();
 }

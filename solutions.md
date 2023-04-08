@@ -316,7 +316,7 @@ int main()
     cin.tie(0);
     cout.tie(0);
     ios::sync_with_stdio(false);
-    int f[64][64], visited[64][64] = { 0, };
+    int f[1000][1000], visited[1000][1000] = { 0, };
     int w, h;
     cin >> w >> h;
     for (int i = 0; i < h; i++)
@@ -337,22 +337,22 @@ int main()
                 qx.push(j), qy.push(i);
                 while (!qx.empty())
                 {
-                    int herex = qx.front(), herey = qy.front();
-                    visited[herey][herex] = 1;
+                    int hereX = qx.front(), hereY = qy.front();
+                    visited[hereY][hereX] = 1;
                     for (int i = 0; i < 4; i++)
                     {
-                        int therex = herex + dirx[i], therey = herey + diry[i];
-                        if (therex >= 0 && therex < w && therey >= 0 && therey < h)
+                        int thereX = hereX + dirx[i], thereY = hereY + diry[i];
+                        if (thereX >= 0 && thereX < w && thereY >= 0 && thereY < h)
                         {
-                            if (visited[therey][therex] != 1 && f[therey][therex] == -1)
+                            if (visited[thereY][thereX] != 1 && f[thereY][thereX] == -1)
                             {
                                 cout << dist + 1;
                                 return 0;
                             }
-                            if (visited[therey][therex] != 1 && f[therey][therex] == 0)
+                            if (visited[thereY][thereX] != 1 && f[thereY][thereX] == 0)
                             {
-                                qx.push(therex);
-                                qy.push(therey);
+                                qx.push(thereX);
+                                qy.push(thereY);
                             }
                         }
                     }
@@ -410,17 +410,10 @@ def checkNextBlock(arg):
     global hasAnswer
     time, x, y = arg
     
-    if time == 0:
-        pass
-    elif location[y][x] == -2:
-        #already checked
-        return
-    elif location[y][x] == -1:
+    if location[y][x] == -1 and timeCost[y][x] != 0:
         hasAnswer = True
         print(timeCost[y][x])
         return
-    
-    location[y][x] = -2
 
     for move in direction:
         nextX = x + move[0]
@@ -430,7 +423,7 @@ def checkNextBlock(arg):
         nextTime = time + location[nextY][nextX] + 1
         if location[nextY][nextX] == -1: nextTime += 1
 
-        # location[nextY][nextX] is never -2 in this situation (알고리즘에 의해 증명 가능)
+        # nextTime is the minimum time to reach location[nextY][nextX] is in this situation (알고리즘에 의해 증명 가능)
         if nextTime < timeCost[nextY][nextX]:
             timeCost[nextY][nextX] = nextTime
             queue.put((nextTime, nextX, nextY))
@@ -439,9 +432,9 @@ def startDijkstra():
     for y in range(h):
         for x in range(w):
             if location[y][x] == -1:
+                timeCost[y][x] = 0
                 checkNextBlock((0, x, y))
                 return
-
 
 getInput()
 startDijkstra()
@@ -450,7 +443,114 @@ while not hasAnswer:
     checkNextBlock(queue.get())
 ```
 
-* -2일 경우 해당 칸에서 이동하는 경우는 이미 셌다는걸 표시한다.
+
+```cpp
+#include <iostream>
+#include <algorithm>
+#include <queue>
+using namespace std;
+/*
+    code by Raehwan
+    & refactored by Junee
+*/
+
+int w, h, location[1000][1000], timeArray[1000][1000], dirx[4] = { 1, 0, -1, 0 }, diry[4] = { 0, 1, 0, -1 };
+priority_queue<pair<int, pair<int, int>>> pq;
+
+void getInput() {
+    cin >> w >> h;
+    for (int i = 0; i < h; i++)
+    {
+        for (int j = 0; j < w; j++)
+        {
+            cin >> location[i][j];
+        }
+    }
+}
+
+void initTime() {
+    for (int i = 0; i < h; i++)
+    {
+        for (int j = 0; j < w; j++)
+        {
+            timeArray[i][j] = 9999999;
+        }
+    }
+}
+
+void dijkstra() {
+    while (!pq.empty())
+    {
+        int curTime = -pq.top().first, hereX = pq.top().second.first, hereY = pq.top().second.second;
+        for (int k = 0; k < 4; k++)
+        {
+            int thereX = hereX + dirx[k], thereY = hereY + diry[k];
+            bool isInRange = (thereX < 0 || thereX >= w || thereY < 0 || thereY >= h);
+
+            if (isInRange || curTime > timeArray[thereY][thereX])
+            {
+                continue;
+            }
+
+            int newTime;
+            if (location[thereY][thereX] != -1)
+            {
+                newTime = curTime + location[thereY][thereX] + 1;
+            }
+            else
+            {
+                newTime = curTime + 1;
+            }
+
+            if(newTime < timeArray[thereY][thereX])
+            {
+                timeArray[thereY][thereX] = newTime;
+                pq.push( make_pair(-newTime, make_pair(thereX, thereY)) );
+            }
+        }
+        pq.pop();
+    }
+}
+
+int getAnswer() {
+    for(int i = 0; i < h; i++)
+    {
+        for(int j = 0; j < w; j++)
+        {
+            if(location[i][j] == -1 && timeArray[i][j] != 0)
+            {
+                return timeArray[i][j];
+            }
+        }
+    }
+}
+
+int main()
+{
+    getInput();
+    initTime();
+    bool solved = false;
+    for(int i=0;i<h;i++)
+    {
+        for(int j=0;j<w;j++)
+        {
+            if(location[i][j]==-1)
+            {
+                timeArray[i][j]=0;
+                pq.push(make_pair(0,make_pair(j,i)));
+                dijkstra();
+                solved = true;
+                break;
+            }
+        }
+        if (solved)
+        {
+            break;
+        }
+    }
+    cout << getAnswer();
+}
+```
 
 ---
 
