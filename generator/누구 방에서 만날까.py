@@ -14,6 +14,7 @@ inputDataList = [
 for testCase in range(100):
     numbers = [ str( random.randint(400, 500) ) for _ in range(3) ]
     inputStr = ' '.join(numbers)
+    
     inputDataList.append(inputStr)
 
 for inputStr in inputDataList:

@@ -16,6 +16,7 @@ for testCase in range(100):
     inputStr = ''
     for wordCount in range(random.randint(3, 30)):
         inputStr += random.choice(words)
+        
     if '이슈' in inputStr:
         inputDataList.append(inputStr)
 

@@ -195,8 +195,8 @@ n = int(n)
 m = int(m)
 
 infectedRooms = list(map(int, input().split()))
-firstRoom = 422
-lastRoom = 422 + n - 1
+firstRoom = 423
+lastRoom = 423 + n - 1
 
 maxDiff = infectedRooms[0] - firstRoom
 
