@@ -45,7 +45,8 @@ for inputStr in inputDataList:
         outputStr = '유감'
     else:
         outputStr = '무감'
-    dataList.append( ioData(inputStr, outputStr) )
+        
+    dataList.append( ioData(inputStr + '\n', outputStr) )
 
 generate('유감', dataList)
 ```
@@ -79,7 +80,8 @@ for inputStr in inputDataList:
         outputStr = '이슈가 있는데?'
     else:
         outputStr = '이슈가 너무 큰데?'
-    dataList.append( ioData(inputStr, outputStr) )
+
+    dataList.append( ioData(inputStr + '\n', outputStr) )
 
 generate('이슈가 있는데', dataList)
 ```

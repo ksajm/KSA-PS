@@ -18,6 +18,6 @@ for inputStr in inputDataList:
     else:
         outputStr = '무감'
         
-    dataList.append( ioData(inputStr, outputStr) )
+    dataList.append( ioData(inputStr + '\n', outputStr) )
 
 generate('유감', dataList)
